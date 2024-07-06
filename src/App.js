@@ -10,10 +10,14 @@ import "./styles.css"
 
 function App() {
   return (
-    <div className="App">
+    <div>
      <Header/>
-     <Player whichPlayer= 'X'/>
-     <Player whichPlayer='O'/>
+     
+     <div className='players'>
+      <Player player= 'X'/>
+      <Player player='O'/>
+     </div>
+
      <Board/>
      <a href='https://github.com/geno223'>Click me</a>
     </div>

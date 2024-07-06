@@ -2,8 +2,8 @@
 
 const Player =(props) => {
     return(
-        <div>
-            <h2>Player {props.whichPlayer}</h2>
+        <div className={props.player}>
+            <h2>Player {props.player}</h2>
             <h3>Wins:</h3>
         </div>
     )
