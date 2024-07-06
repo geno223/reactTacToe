@@ -21,3 +21,20 @@ h1{
 .X, .O{
     text-align: center;
 }
+.board{
+    display: grid;
+    grid-template-columns: 15vw 15vw 15vw;
+    justify-content: center;
+    grid-template-rows: 15vw 15vw 15vw;
+
+}
+.board div{
+  border: 3px solid aqua;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: antiquewhite;
+}
+a{
+    color: antiquewhite;
+}
