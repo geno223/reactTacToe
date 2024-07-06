@@ -1,70 +1,394 @@
-# Getting Started with Create React App
+## React Tic-Tac-Toe
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+We will be focusing on writing React Functional Components, this is the more modern and current standard way of writing React code.
 
-## Available Scripts
+There is an older still used Class based syntax. We recommend to first focus on getting comfortable and master React development with the Functional Syntax then revisit the class syntax at that point when necessary (if working on older code bases).
 
-In the project directory, you can run:
 
-### `npm start`
+**in app.js**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Let's render an `h1` inside our App component in App.js
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```js
+import logo from './logo.svg';
+import './App.css';
 
-### `npm test`
+function App() {
+  return (<h1> React Tac Toe </h1>);
+}
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+export default App;
+```
 
-### `npm run build`
+**NOTE FOR INSTRUCTORS** With React 17 and later importing React is no longer required for components that aren't using any hooks.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+When we refresh our view "Hello World" should be replaced with "React Tac Toe".
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+##### If we've installed React Dev tools, we can go over to the React tab and see our component
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![react dev tools](https://i.imgur.com/CxcflPZ.png)
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Making a Component inside another component
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+According to our mockup, our App will have 4 components
+ - header
+ - two player components
+ - board
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+With react, we can only render **ONE** component. That component can have numerous components inside of it.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Let's make our header component by doing the following:
+- create a "components" folder in "src" to house all our non-App components
+- create a file src/components/Header.js
 
-## Learn More
+**NOTE** You can write multiple components in one file, but it is convention that each component get its own file in the components folder.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```js
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+function Header() {
+  return (<h1> React Tac Toe </h1>);
+}
 
-### Code Splitting
+export default Header;
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+To use this component we need to:
+- import it into app
+- use it in the JSX of the app component, using components looks a lot like using HTML!
 
-### Analyzing the Bundle Size
+```js
+import Header from "./components/Header";
+import './App.css';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+function App() {
+  return (<Header/>);
+}
 
-### Making a Progressive Web App
+export default App;
+```
+We still haven't changed how things should look so let's use the dev tools to check everything is in order:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+![react dev tools](https://i.imgur.com/ZZ2cteT.png)
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Let's make a player scoreboard
 
-### Deployment
+- create a new file in "components" called `Player.js`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```js
+function Player() {
+    return (
+        <div>
+          <h2>Player </h2>
+          <h3>Wins: </h3>
+        </div>
+      )
+  }
+  
+  export default Player;
+```
 
-### `npm run build` fails to minify
+And have that component render in our app:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```js
+import Header from "./components/Header";
+import Player from "./components/Player";
+import "./App.css";
+
+function App() {
+  return (
+    <div>
+      <Header />
+      <Player />
+    </div>
+  );
+}
+
+export default App;
+```
+
+Since a main feature of React is reusable components we can just copy our Player again:
+
+```js
+import Header from "./components/Header";
+import Player from "./components/Player";
+import "./App.css";
+
+function App() {
+  return (
+    <div>
+      <Header />
+      <Player />
+      <Player />
+    </div>
+  );
+}
+
+export default App;
+```
+
+![two players](https://i.imgur.com/eUkvjtR.png)
+
+
+### A Sneak Peak of a Lesson in the Near Future
+
+We know we have a player X and a player O, and we want to be able to customize our components. We can pass custom properties to our Player components, using `props` (short for properties). `props` is a special term in React. Let's see it in action.
+
+Let's make a custom `prop` called `whichPlayer` and pass the appropriate player name
+
+```js
+import Header from "./components/Header";
+import Player from "./components/Player";
+import "./App.css";
+
+function App() {
+  return (
+    <div>
+      <Header />
+      <Player whichPlayer='x'/>
+      <Player whichPlayer='o'/>
+    </div>
+  );
+}
+
+export default App;
+```
+
+Now, we need to access these properties inside our Player component. Our player component is a child of App, and thus has access to props. Don't worry if this doesn't make sense yet. We'll be returning to this concept over and over again and it'll start to come together.
+
+```js
+// Props are passed as object argument to our component, so we must define a parameter to receive it
+// conventionally the parameter is called props
+function Player(props) {
+    return (
+        <div>
+          <h2>Player {props.whichPlayer} </h2>
+          <h3>Wins: </h3>
+        </div>
+      )
+  }
+  
+  export default Player;
+```
+
+Now we can see our custom property `whichPlayer` rendering with its value, depending on which component it is:
+
+![Props](https://i.imgur.com/Zieebv4.png)
+
+
+Let's make one more component for our App, the board:
+
+- make a Board.js in components
+
+```js
+function Board(props) {
+    return (
+        <div>
+          the board!
+        </div>
+      )
+  }
+  
+  export default Board;
+```
+
+Don't forget to add the `Board` component in our `App`
+
+```js
+import Header from "./components/Header";
+import Player from "./components/Player";
+import Board from "./components/Board";
+import "./App.css";
+
+function App() {
+  return (
+    <div>
+      <Header />
+      <Player whichPlayer="x" />
+      <Player whichPlayer="o" />
+      <Board/>
+    </div>
+  );
+}
+
+export default App;
+```
+
+### You Do:
+
+On your own, and then we'll review ~ 10 minutes
+- make one more component called `Square`, made up of a div, inside the div put an `h4` element, inside the `h4` put some text like the word `square`
+- gotcha! divs have a height and width of 0 when they are empty. Be sure to put in an `h4` and some text
+- render 9 squares inside the Board
+- **Extra** - Read ahead to learn how to incorporate CSS
+
+
+### CSS & React
+
+Right now we have all the right elements, but we need some style to make it look like a proper tic tac toe game, let's try to make it look like this:
+
+ ![expected final appearance](https://i.imgur.com/gbvCuEY.png)
+
+ We can create as many CSS files as we want in the src folder, and as long as we import the css file in at least one component, then the styles will be applied to our whole project (some people like to make a css file for each component for organization, but let's not). For now let's just focus on using one stylesheet.
+
+ - create src/styles.css
+ - import styles.css into App.js
+
+ ```js
+ import Header from "./components/Header";
+import Player from "./components/Player";
+import Board from "./components/Board";
+import "./styles.css";
+
+function App() {
+  return (
+    <div>
+      <Header />
+      <Player whichPlayer="x" />
+      <Player whichPlayer="o" />
+      <Board/>
+    </div>
+  );
+}
+
+export default App;
+```
+
+Let's add a little starting style to make sure everything is linked correctly
+
+```css
+:root {
+  --dark-cerulean: #124e78;
+  --maastricht-blue: #0b132b;
+  --yankees-blue: #1C2541;
+  --sea-serpent: #5bc0be;
+  --aquamarine: #6fffe9;
+  --react: #00d8ff;
+}
+
+html {
+  background: var(--yankees-blue);
+}
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+}
+
+```
+
+Let's add some classes to target parts of our components
+
+**app.js**
+
+Player:
+
+```js
+
+function Player(props) {
+    return (
+        <div className={props.whichPlayer}>
+          <h2>Player {props.whichPlayer} </h2>
+          <h3>Wins: </h3>
+        </div>
+      )
+  }
+  
+  export default Player;
+
+```
+
+Board:
+
+```js
+import Square from "./Square"
+
+function Board(props) {
+    return (
+        <div className="board">
+          <Square/>
+          <Square/>
+          <Square/>
+          <Square/>
+          <Square/>
+          <Square/>
+          <Square/>
+          <Square/>
+          <Square/>
+        </div>
+      )
+  }
+  
+  export default Board;
+
+```
+
+Square:
+```js
+function Square(props) {
+    return (
+        <div>
+          <h4>square</h4>
+        </div>
+      )
+  }
+  
+  export default Square;
+```
+
+
+We can use a combination of flexbox and css grid to complete the look
+
+```css
+.container > div {
+  display: flex;
+  background: var(--yankees-blue);
+  flex-wrap: wrap;
+  justify-content: space-around;
+  min-height: 60vh;
+  align-items: flex-start;
+
+}
+
+.board {
+  flex-basis: 60%;
+  display: grid;
+  grid-template-columns: 15vw 15vw 15vw;
+  grid-template-rows: 15vw 15vw 15vw;
+  color: white;
+  justify-items: stretch;
+  justify-content: center;
+}
+
+.board  div {
+  display: flex;
+  align-items: center;
+  border: 3px solid var(--react);
+}
+
+h4 {
+  text-align: center;
+  flex-basis: 100%;
+  align-self: center;
+}
+
+.X, .O {
+  flex-basis: 45%;
+  text-align: center;
+}
+
+.X {
+  color: var(--sea-serpent);
+}
+
+.O {
+  color: var(--aquamarine);
+}
+h1 {
+  flex-basis: 60%;
+  color: var(--react);
+  text-align: center;
+
+}
+```
